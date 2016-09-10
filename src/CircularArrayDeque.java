@@ -20,7 +20,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
     private int currentSize, capacity, front, back;
     private static final int DEFAULT_CAPACITY =10;
     CircularArrayDeque(){
-        items=null;
+        items=(T[]) new Object[0];
         currentSize=0;
         capacity=DEFAULT_CAPACITY;
         front = 0;
@@ -154,6 +154,8 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
     }
     public static void main(String[] args) {
         System.out.println("                                Begin testing");
+        System.out.println("------------------------------------------------"
+                + "------------------------------");
         int[] array = {8, 7, 5, 3, 6, 7, 12, 4};
         CircularArrayDeque cad = new CircularArrayDeque(array);
         System.out.println("Initial Array: ");
@@ -169,6 +171,8 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         System.out.println("After removeFirst(), addLast(3):");
         cad.printInfo();
         System.out.println("Result of get(5): "+cad.get(5));
+        System.out.println("------------------------------------------------"
+                + "------------------------------");
         System.out.println("                                End testing");
     }
 }
