@@ -1,7 +1,7 @@
 
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Collection;
+import java.util.Iterator;
 
 interface DequeInterface<T>{
         public boolean isEmpty();
@@ -30,6 +30,29 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         capacity = currentSize;
         front=0;
         back=currentSize-1;
+    }
+    CircularArrayDeque(int[] x){
+        items = (T[]) new Object[x.length];
+        for(int i=0; i<x.length; i++)
+            items[i]=(T)Integer.valueOf(x[i]);
+        currentSize=x.length;
+        capacity = currentSize;
+        front = 0;
+        back = currentSize-1;
+    }
+    CircularArrayDeque(Collection<? extends Object> collection){
+        Iterator iterator = collection.iterator();
+        items = (T[])new Object[collection.size()];
+        int i=0;
+        while(iterator.hasNext()){
+            items[i]=(T)iterator.next();
+            i++;
+        }
+        currentSize=items.length;
+        capacity=currentSize;
+        front=0;
+        back=currentSize-1;
+            
     }
     @Override
     public boolean isEmpty() {
@@ -119,22 +142,31 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         back=currentSize-1;
         capacity=capacity*2;
     }
-    public void printItems(){
-        System.out.println("--------------------");
-        System.out.println(Arrays.toString(items));
+    public void printInfo(){
+        System.out.println("The Array: "+Arrays.toString(items));
         System.out.println("front: "+front);
         System.out.println("back: "+back);
         System.out.println("capacity: "+ capacity);
-        System.out.println("currentsize: "+currentSize);
-        System.out.println("---------------------");
+        System.out.println("currentSize: "+currentSize);
+        System.out.println("------------------------------------------------"
+                + "------------------------------");
     }
     public static void main(String[] args) {
-        //testing
-        Integer[] array = {8, 7, 5, 3, 6, 7, 12, 4};
+        System.out.println("                                Begin testing");
+        int[] array = {8, 7, 5, 3, 6, 7, 12, 4};
         CircularArrayDeque cad = new CircularArrayDeque(array);
-        cad.printItems();
         cad.addLast(1);
-        cad.printItems();
+        cad.addLast(2);
+        cad.addLast(3);
+        System.out.println("------------------------------------------------"
+                + "------------------------------");
+        cad.removeLast();
+        cad.printInfo();
+        cad.removeFirst();
+        cad.addLast(3);
+        cad.printInfo();
+        System.out.println("Result of get(5): "+cad.get(5));
+        System.out.println("                                End testing");
     }
 }
 
