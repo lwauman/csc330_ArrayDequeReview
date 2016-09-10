@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+
+
 interface DequeInterface<T>{
         public boolean isEmpty();
         public T getFirst();
@@ -51,8 +53,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         currentSize=items.length;
         capacity=currentSize;
         front=0;
-        back=currentSize-1;
-            
+        back=currentSize-1;   
     }
     @Override
     public boolean isEmpty() {
@@ -155,15 +156,17 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         System.out.println("                                Begin testing");
         int[] array = {8, 7, 5, 3, 6, 7, 12, 4};
         CircularArrayDeque cad = new CircularArrayDeque(array);
+        System.out.println("Initial Array: ");
+        cad.printInfo();
         cad.addLast(1);
         cad.addLast(2);
         cad.addLast(3);
-        System.out.println("------------------------------------------------"
-                + "------------------------------");
         cad.removeLast();
+        System.out.println("After addLast(1), addLast(2), addLast(3), removeLast():");
         cad.printInfo();
         cad.removeFirst();
         cad.addLast(3);
+        System.out.println("After removeFirst(), addLast(3):");
         cad.printInfo();
         System.out.println("Result of get(5): "+cad.get(5));
         System.out.println("                                End testing");
