@@ -22,9 +22,9 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
     private T[] items;
     //variables to track specific info about above array
     private int currentSize, capacity, front, back;
-    //used to set up array on default constructor
-    private static final int DEFAULT_CAPACITY =10;
-    //default constructor
+    //used to set items size within noArg constructor
+    private static final int DEFAULT_CAPACITY=10;
+    //noArg constructor
     CircularArrayDeque(){
         //initialize array and variables
         items=(T[]) new Object[0];
@@ -33,6 +33,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         front = 0;
         back = 0;
     }
+    //overloading constructors
     //accepting any array of objects
     CircularArrayDeque(T[] array){
         //initialize array and variables
@@ -45,6 +46,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         back=currentSize-1;
     }
     //accepting specifically a primitive int array
+    //this could be done for any primitive array
     CircularArrayDeque(int[] array){
         //initialize array and variables
         items = (T[]) new Object[array.length];
@@ -70,16 +72,16 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         front=0;
         back=currentSize-1;   
     }
-    //returns if items is empty
+    //returns if items(array) is empty
     @Override
     public boolean isEmpty() {
         return currentSize==0;
     }
-    //returns if items is full
+    //returns if items(array) is full
     public boolean isFull(){
         return currentSize==capacity;
     }
-    //returns the first element of items if it exists
+    //returns the front(variable) element of items if it exists
     @Override
     public T getFirst() {
         if(isEmpty())
@@ -87,7 +89,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         else
             return items[front];     
     }
-    //move front and add element to updated location
+    //move front(variable) and add element to updated location
     @Override
     public void addFirst(T toAdd) {
          if(isFull())
@@ -96,7 +98,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
          items[front]=toAdd;
          currentSize++;
     }
-    //remove element at front and update location
+    //remove element at front(variable) and update location
     @Override
     public T removeFirst() {
         if(isEmpty())
@@ -109,7 +111,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
             return toReturn;
         }
     }
-    //return last element if it exists
+    //return last(variable) element if it exists
     @Override
     public T getLast() {
         if(isEmpty())
@@ -117,7 +119,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         else
             return items[back];  
     }
-    //manages array size, moves back and adds an elements
+    //manages array size, moves back(variable) and adds an elements
     @Override
     public void addLast(T toAdd) {
         if(isFull())
@@ -126,7 +128,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         items[back]=toAdd;
         currentSize++;
     }
-    //removes last element and updates location
+    //removes back(variable) element and updates location
     @Override
     public T removeLast() {
         if(isEmpty())
@@ -139,27 +141,27 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
             return toReturn;
         }
     }
-    //returns the element at index where index is relative front rather 
-    //than to the beginning index of the items array
+    //returns the element at index where index is relative to front(variable)
+    //rather than to the beginning index of items(array)
     @Override
     public T get(int index) {
         return items[(front+index)%capacity];
     }
-    //used to update location of front/back
+    //used to update location of front/back(variables)
     private int increment(int x){
         if(x+1==capacity)
             return 0;
         else
             return ++x;
     }
-    //used to update location of front/back
+    //used to update location of front/back(variables)
     private int decrement(int x){
         if(x-1==-1)
             return capacity-1;
         else
             return --x;
     }
-    //doubles items size and copies contents
+    //doubles items(array) size and copies contents
     private void doubleQueue(){
         T[] newArray = (T[]) new Object[capacity*2];
         for(int i=0; i<currentSize;i++){
