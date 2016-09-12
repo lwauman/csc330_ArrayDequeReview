@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 
-
+//I am using this interface because when you actually implement Deque there
+//are too many unused methods
 interface DequeInterface<T>{
         public boolean isEmpty();
         public T getFirst();
@@ -15,34 +16,48 @@ interface DequeInterface<T>{
         public T removeLast();
         public T get(int index);
 }
+//this class demonstrates a generic "wraparound" array double ended queue
 public class CircularArrayDeque<T> implements DequeInterface<T>{
+    //an array to hold data
     private T[] items;
+    //variables to track specific info about above array
     private int currentSize, capacity, front, back;
+    //used to set up array on default constructor
     private static final int DEFAULT_CAPACITY =10;
+    //default constructor
     CircularArrayDeque(){
+        //initialize array and variables
         items=(T[]) new Object[0];
         currentSize=0;
         capacity=DEFAULT_CAPACITY;
         front = 0;
         back = 0;
     }
+    //accepting any array of objects
     CircularArrayDeque(T[] array){
-        items=array;
+        //initialize array and variables
+        items =(T[]) new Object[array.length];
+        for(int i=0; i<array.length;i++)
+            items[i]=array[i];
         currentSize=array.length;
         capacity = currentSize;
         front=0;
         back=currentSize-1;
     }
-    CircularArrayDeque(int[] x){
-        items = (T[]) new Object[x.length];
-        for(int i=0; i<x.length; i++)
-            items[i]=(T)Integer.valueOf(x[i]);
-        currentSize=x.length;
+    //accepting specifically a primitive int array
+    CircularArrayDeque(int[] array){
+        //initialize array and variables
+        items = (T[]) new Object[array.length];
+        for(int i=0; i<array.length; i++)
+            items[i]=(T)Integer.valueOf(array[i]);
+        currentSize=array.length;
         capacity = currentSize;
         front = 0;
         back = currentSize-1;
     }
+    //accepting any collection of objects
     CircularArrayDeque(Collection<? extends Object> collection){
+        //initialize the collection iterator, array and variables
         Iterator iterator = collection.iterator();
         items = (T[])new Object[collection.size()];
         int i=0;
@@ -55,13 +70,16 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         front=0;
         back=currentSize-1;   
     }
+    //returns if items is empty
     @Override
     public boolean isEmpty() {
         return currentSize==0;
     }
+    //returns if items is full
     public boolean isFull(){
         return currentSize==capacity;
     }
+    //returns the first element of items if it exists
     @Override
     public T getFirst() {
         if(isEmpty())
@@ -69,6 +87,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         else
             return items[front];     
     }
+    //move front and add element to updated location
     @Override
     public void addFirst(T toAdd) {
          if(isFull())
@@ -77,6 +96,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
          items[front]=toAdd;
          currentSize++;
     }
+    //remove element at front and update location
     @Override
     public T removeFirst() {
         if(isEmpty())
@@ -89,6 +109,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
             return toReturn;
         }
     }
+    //return last element if it exists
     @Override
     public T getLast() {
         if(isEmpty())
@@ -96,6 +117,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         else
             return items[back];  
     }
+    //manages array size, moves back and adds an elements
     @Override
     public void addLast(T toAdd) {
         if(isFull())
@@ -104,6 +126,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         items[back]=toAdd;
         currentSize++;
     }
+    //removes last element and updates location
     @Override
     public T removeLast() {
         if(isEmpty())
@@ -116,22 +139,27 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
             return toReturn;
         }
     }
+    //returns the element at index where index is relative front rather 
+    //than to the beginning index of the items array
     @Override
     public T get(int index) {
         return items[(front+index)%capacity];
     }
+    //used to update location of front/back
     private int increment(int x){
         if(x+1==capacity)
             return 0;
         else
             return ++x;
     }
+    //used to update location of front/back
     private int decrement(int x){
         if(x-1==-1)
             return capacity-1;
         else
             return --x;
     }
+    //doubles items size and copies contents
     private void doubleQueue(){
         T[] newArray = (T[]) new Object[capacity*2];
         for(int i=0; i<currentSize;i++){
@@ -143,12 +171,15 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         back=currentSize-1;
         capacity=capacity*2;
     }
+    //used to output information about items 
     public void printInfo(){
         System.out.println("The Array: "+Arrays.toString(items));
-        System.out.println("front: "+front);
-        System.out.println("back: "+back);
-        System.out.println("capacity: "+ capacity);
-        System.out.println("currentSize: "+currentSize);
+        System.out.println("Index of front: "+front);
+        System.out.println("Index of back: "+back);
+        System.out.println("Element at front: "+items[front]);
+        System.out.println("Element at back: "+items[back]);
+        System.out.println("Capacity: "+ capacity);
+        System.out.println("CurrentSize: "+currentSize);
         System.out.println("------------------------------------------------"
                 + "------------------------------");
     }
