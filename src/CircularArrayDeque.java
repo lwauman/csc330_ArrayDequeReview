@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 
 //I am using this interface because when you actually implement Deque there
-//are too many unused methods
+//are many(>5) unused methods
 interface DequeInterface<T>{
         public boolean isEmpty();
         public T getFirst();
@@ -142,7 +142,7 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         }
     }
     //returns the element at index where index is relative to front(variable)
-    //rather than to the beginning index of items(array)
+    //rather than to the indices of items(array)
     @Override
     public T get(int index) {
         return items[(front+index)%capacity];
@@ -190,20 +190,20 @@ public class CircularArrayDeque<T> implements DequeInterface<T>{
         System.out.println("------------------------------------------------"
                 + "------------------------------");
         int[] array = {8, 7, 5, 3, 6, 7, 12, 4};
-        CircularArrayDeque cad = new CircularArrayDeque(array);
+        CircularArrayDeque deque = new CircularArrayDeque(array);
         System.out.println("Initial Array: ");
-        cad.printInfo();
-        cad.addLast(1);
-        cad.addLast(2);
-        cad.addLast(3);
-        cad.removeLast();
+        deque.printInfo();
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.removeLast();
         System.out.println("After addLast(1), addLast(2), addLast(3), removeLast():");
-        cad.printInfo();
-        cad.removeFirst();
-        cad.addLast(3);
+        deque.printInfo();
+        deque.removeFirst();
+        deque.addLast(3);
         System.out.println("After removeFirst(), addLast(3):");
-        cad.printInfo();
-        System.out.println("Result of get(5): "+cad.get(5));
+        deque.printInfo();
+        System.out.println("Result of get(5): "+deque.get(5));
         System.out.println("------------------------------------------------"
                 + "------------------------------");
         System.out.println("                                End testing");
